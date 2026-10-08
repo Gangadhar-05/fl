@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+// StatelessWidget
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    );
+  }
+}
+
+// Displays title using StatelessWidget
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Widget Example'),
+        backgroundColor: Colors.blue,
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'My Favourite',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            FavouriteIcon(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// StatefulWidget
+class FavouriteIcon extends StatefulWidget {
+  const FavouriteIcon({super.key});
+
+  @override
+  State<FavouriteIcon> createState() => _FavouriteIconState();
+}
+
+class _FavouriteIconState extends State<FavouriteIcon> {
+  bool isFavourite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.favorite,
+        color: isFavourite ? Colors.red : Colors.grey,
+        size: 50,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavourite = !isFavourite;
+        });
+      },
+    );
+  }
+}
