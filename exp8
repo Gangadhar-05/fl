@@ -1,46 +1,66 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-// StatelessWidget
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+
+      initialRoute: '/',
+
+      // Named Routes
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/settings': (context) => SettingsScreen(),
+      },
     );
   }
 }
 
-// Displays title using StatelessWidget
+// Home Screen
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Widget Example'),
-        backgroundColor: Colors.blue,
-      ),
-      body: const Center(
+      appBar: AppBar(title: Text("Home Screen")),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Text(
-              'My Favourite',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              "Welcome to Home Screen",
+              style: TextStyle(fontSize: 22),
             ),
+
             SizedBox(height: 20),
-            FavouriteIcon(),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/profile',
+                  arguments: "Gangadhar",
+                );
+              },
+              child: Text("Go to Profile"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/settings',
+                );
+              },
+              child: Text("Go to Settings"),
+            ),
           ],
         ),
       ),
@@ -48,30 +68,39 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// StatefulWidget
-class FavouriteIcon extends StatefulWidget {
-  const FavouriteIcon({super.key});
-
-  @override
-  State<FavouriteIcon> createState() => _FavouriteIconState();
-}
-
-class _FavouriteIconState extends State<FavouriteIcon> {
-  bool isFavourite = false;
-
+// Profile Screen
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        Icons.favorite,
-        color: isFavourite ? Colors.red : Colors.grey,
-        size: 50,
+
+    // Receive arguments
+    final String name =
+        ModalRoute.of(context)!.settings.arguments as String;
+
+    return Scaffold(
+      appBar: AppBar(title: Text("Profile Screen")),
+      body: Center(
+        child: Text(
+          "Welcome, $name!",
+          style: TextStyle(fontSize: 24),
+        ),
       ),
-      onPressed: () {
-        setState(() {
-          isFavourite = !isFavourite;
-        });
-      },
+    );
+  }
+}
+
+// Settings Screen
+class SettingsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Settings Screen")),
+      body: Center(
+        child: Text(
+          "Settings Page",
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }

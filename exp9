@@ -1,0 +1,73 @@
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+// Stateless Widget
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Stateful vs Stateless"),
+          backgroundColor: Colors.blue,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TitleWidget(),
+              SizedBox(height: 20),
+              FavouriteWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Stateless Widget to display title
+class TitleWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "Welcome to Flutter",
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
+// Stateful Widget for favourite icon
+class FavouriteWidget extends StatefulWidget {
+  @override
+  State<FavouriteWidget> createState() =>
+      _FavouriteWidgetState();
+}
+
+class _FavouriteWidgetState extends State<FavouriteWidget> {
+  bool isFavourite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.favorite,
+        color: isFavourite ? Colors.red : Colors.grey,
+        size: 40,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavourite = !isFavourite;
+        });
+      },
+    );
+  }
+}
